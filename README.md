@@ -1,6 +1,6 @@
 # Antibiotic Resistance Analysis Tool
 
-This tool analyzes antibiotic sensitivity data to determine:
+This tool analyzes antibiotic susceptibility data to determine:
 - Effectiveness of individual antibiotics
 - Effectiveness of antibiotic combinations
 - Global coverage of combinations
@@ -13,7 +13,7 @@ Your Excel file must be structured as follows:
 1. **First column**: Must be named "Microorganism" and contain microorganism names/IDs
 2. **Subsequent columns**: Each column represents an antibiotic
 3. **Data values**: 
-   - `S` = Sensitive
+   - `S` = Susceptible
    - `R` = Resistant
    - `N` = Not tested
    - `I` = Intermediate (will be automatically converted to `S`)
@@ -48,7 +48,7 @@ Your Excel file must be structured as follows:
 
 The tool generates:
 1. **Single Antibiotics Analysis**:
-   - Sensitivity percentage
+   - Susceptibility percentage
    - Confidence intervals
    - Counts of S/R results
    - Testing percentage
@@ -69,7 +69,7 @@ The tool generates:
 
 ## Statistical Methods
 
-- **Effectiveness calculation**: Percentage of cases where at least one antibiotic in the pair shows sensitivity
+- **Effectiveness calculation**: Percentage of cases where at least one antibiotic in the pair shows susceptibility
 - **Confidence intervals**: Calculated using beta distribution for binomial proportions
 - **Global effectiveness**: Considers all cases (treating `N` as `R` for combinations)
 
