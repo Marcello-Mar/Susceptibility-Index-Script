@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 import io
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image
-from openpyxl.utils.dataframe import dataframe_to_rows # Added this import
+from openpyxl.utils.dataframe import dataframe_to_rows
 from dataclasses import dataclass
 from typing import List, Tuple, Dict, Optional, Union
 
@@ -187,7 +187,7 @@ class ResultsVisualizer:
         """Visualize results in horizontal bar charts"""
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 12))
 
-        # Single antibiotics plot - FIXED ERROR HERE
+        # Single antibiotics plot
         top_single = sorted(single_results, key=lambda x: x.s_percentage, reverse=True)[:num_to_display['single']]
         y_pos = np.arange(len(top_single))
         s_percentages = [x.s_percentage for x in top_single]
@@ -203,11 +203,11 @@ class ResultsVisualizer:
         )
         ax1.set_yticks(y_pos)
         ax1.set_yticklabels([x.name for x in top_single])
-        ax1.set_title('Top Single Antibiotics by Sensitivity')
-        ax1.set_xlabel('Sensitivity Percentage (%)')
+        ax1.set_title('Top Single Antibiotics by Susceptibility')
+        ax1.set_xlabel('Susceptibility Percentage (%)')
         ax1.grid(axis='x', linestyle='--', alpha=0.7)
 
-        # Combinations plot - FIXED ERROR HERE
+        # Combinations plot
         top_comb = sorted(combination_results, key=lambda x: x.effectiveness, reverse=True)[:num_to_display['combinations']]
         y_pos_comb = np.arange(len(top_comb))
         effectiveness = [x.effectiveness for x in top_comb]
@@ -279,7 +279,7 @@ def main():
         print("----------------------------------")
 
         # File upload
-        print("\nPlease upload your Excel file with antibiotic sensitivity data")
+        print("\nPlease upload your Excel file with antibiotic susceptibility data")
         uploaded = files.upload()
         file_path = next(iter(uploaded))
 
