@@ -22,8 +22,8 @@ Your Excel file must be structured as follows:
 
 | Microorganism | Ampicillin | Gentamicin | Ciprofloxacin | ... |
 |---------------|------------|------------|---------------|-----|
-| E. coli 001   | S          | R          | S             | ... |
-| S. aureus 002 | R          | S          | N             | ... |
+| E. coli       | S          | R          | S             | ... |
+| S. aureus     | R          | S          | N             | ... |
 | ...           | ...        | ...        | ...           | ... |
 
 ### Important Notes
