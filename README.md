@@ -31,50 +31,58 @@ Your Excel file must be structured as follows:
 2. Empty cells will be treated as `N` (Not tested)
 3. The file must be in `.xlsx` format
 
+### Supporting Files
+
+This tool requires additional Excel files for specific functions:
+
+* **Gram Stain Map (`gram_stain_map.xlsx`)**: A simple Excel file with two columns, `Microorganism` and `Gram_stain`. The script uses this to classify bacteria. If a microorganism is not found, the tool will ask for the classification and update the file for future use.
+* **Exclusion List (Optional)**: A single-column Excel file containing a list of microorganism names to be excluded from the analysis (e.g., contaminants).
+
+---
+
 ## How to Use
 
-1. Run the script (Google Colab recommended)
-2. Upload your Excel file when prompted
-3. Enter the minimum testing threshold (0-100):
-   - This filters out antibiotics tested in less than X% of cases
-   - Example: 50 = only include antibiotics with ≥50% testing rate
-4. Specify how many results to display in each graph
-5. The tool will:
-   - Analyze the data
-   - Show interactive graphs
-   - Export results to an Excel file
+1.  Run the script (Google Colab is recommended).
+2.  Upload your primary data file when prompted.
+3.  Upload your Gram stain map file. The tool will automatically create a new one if it doesn't exist.
+4.  Specify if you wish to **upload a list of microorganisms to exclude** from the analysis.
+5.  Enter the **minimum testing threshold** (0-100): This filters out antibiotics tested on less than X% of the isolates.
+6.  Enter the desired **confidence level** (e.g., 95 for 95% CI).
+
+The tool will then perform the analysis and export the results to an Excel file.
+
+---
+
+## Analytical Metrics and Statistics
+
+For each antibiotic and two-drug combination, the following metrics are calculated:
+
+* **Susceptibility Percentage**: The proportion of susceptible isolates relative to the total number of tested isolates (S / [S+R]).
+* **Global Effectiveness**: The proportion of susceptible isolates relative to the total number of all isolates in the dataset (S / total isolates).
+* **Confidence Intervals**: Calculated using the beta distribution at the specified confidence level to quantify the precision of the estimates.
+
+All metrics are calculated for three distinct data subsets: all isolates, Gram-positive isolates, and Gram-negative isolates.
+
+---
 
 ## Output
 
-The tool generates:
-1. **Single Antibiotics Analysis**:
-   - Susceptibility percentage
-   - Confidence intervals
-   - Counts of S/R results
-   - Testing percentage
+The script generates a single `.xlsx` file with the following sheets:
 
-2. **Combination Analysis**:
-   - Pairwise effectiveness
-   - Global effectiveness
-   - Confidence intervals for both metrics
-   - Testing coverage
+* **Summary**: A comprehensive overview that includes:
+    * The total number of excluded isolates.
+    * The distribution of Gram-positive vs. Gram-negative isolates.
+    * A list of the top 10 most common microorganisms.
+    * Lists of the top 10 most resistant antibiotics for both Gram-positive and Gram-negative subsets.
+* **Separate Sheets**: The full analytical results are provided on dedicated sheets for each data subset:
+    * `All - Singles` and `All - Combs`
+    * `Gram+ - Singles` and `Gram+ - Combs`
+    * `Gram- - Singles` and `Gram- - Combs`
 
-3. **Visualizations**:
-   - Top single antibiotics
-   - Top antibiotic combinations
-
-4. **Excel Export**:
-   - All results in separate sheets
-   - Graphs embedded in the Excel file
-
-## Statistical Methods
-
-- **Effectiveness calculation**: Percentage of cases where at least one antibiotic in the pair shows susceptibility
-- **Confidence intervals**: Calculated using beta distribution for binomial proportions
-- **Global effectiveness**: Considers all cases (treating `N` as `R` for combinations)
+---
 
 ## Requirements
 
-- Python 3.7+
-- Required packages: pandas, numpy, scipy, matplotlib, openpyxl
-- For Google Colab: no additional setup needed
+* Python 3.7+
+* Required packages: `pandas`, `numpy`, `scipy`, `openpyxl`
+* For Google Colab: no additional setup is needed.
