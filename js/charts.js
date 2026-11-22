@@ -115,12 +115,14 @@
         let p, title;
         if (i === j) { const s = sMap.get(a.agent); p = s ? s.pS : NaN; title = `${a.agent}: ${f1(p)}%`; }
         else { const c = cMap.get(a.agent + '\u0000' + agents[j].agent); p = c ? c.pS : NaN; title = `${a.agent} + ${agents[j].agent}: ${f1(p)}%`; }
-        const bd = band(p, o.thresholds);
-        const fill = { good: C.goodBg, mid: C.midBg, low: C.lowBg, na: C.naBg }[bd];
-        const fg = { good: C.good, mid: C.mid, low: C.low, na: C.ink3 }[bd];
+        const hid = i !== j && o.hidden && o.hidden(a.agent, agents[j].agent);
+        const bd = hid ? 'na' : band(p, o.thresholds);
+        const fill = hid ? '#f4f6f7' : { good: C.goodBg, mid: C.midBg, low: C.lowBg, na: C.naBg }[bd];
+        const fg = hid ? '#b5c2c8' : { good: C.good, mid: C.mid, low: C.low, na: C.ink3 }[bd];
+        if (hid) title += ' (redundant, hidden by rule)';
         const key = i === j ? '' : ` data-a="${esc(a.agent)}" data-b="${esc(agents[j].agent)}"`;
         b += `<g class="mx"${key}><title>${esc(title)}</title><rect x="${x + 0.5}" y="${y + 0.5}" width="${cell - 1}" height="${cell - 1}" fill="${fill}" ${i === j ? `stroke="${C.ink}" stroke-width="1"` : ''}/>` +
-          `<text x="${x + cell / 2}" y="${y + cell / 2 + 3.5}" font-size="${cell > 28 ? 10 : 9}" font-weight="600" fill="${fg}" text-anchor="middle">${isFinite(p) ? Math.floor(p * 100 + 1e-9) : '–'}</text></g>`;
+          `<text x="${x + cell / 2}" y="${y + cell / 2 + 3.5}" font-size="${cell > 28 ? 10 : 9}" font-weight="${hid ? 400 : 600}" fill="${fg}" text-anchor="middle">${hid ? '·' : isFinite(p) ? Math.floor(p * 100 + 1e-9) : '–'}</text></g>`;
       }
     });
     const ly = top + n * cell + 22;

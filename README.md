@@ -45,6 +45,8 @@ For each agent and each pair, in each subset:
 - **Combination**: S when at least one agent is S.
 - **Gain over a single agent**: isolates R to that agent and S to its partner, over the isolates tested for that agent. p-value: exact two-sided McNemar test on the same isolates (paired), not adjusted for multiple comparisons.
 
+**Redundant pairs.** Combinations can hide pairs that make no therapeutic sense, by the class assigned to each antibiotic (editable in step 2). Three rules, each switchable: two agents of the same class; two β-lactams of different classes (e.g. cefepime + meropenem); two anti-Gram-positive agents (glycopeptide, lipopeptide, oxazolidinone). Pairs kept despite the rules, each switchable: ampicillin + ceftriaxone/cefotaxime ([Fernández-Hidalgo 2013](https://doi.org/10.1093/cid/cit052)), ceftazidime-avibactam + aztreonam ([Falcone 2021](https://doi.org/10.1093/cid/ciaa586)), cefazolin + ertapenem ([Ulloa 2020](https://doi.org/10.1093/cid/ciz995)), and, off by default, ertapenem + another carbapenem ([Souli 2017](https://doi.org/10.1007/s10096-017-2936-5)). Further pairs can be listed by hand. The filter changes which rows are shown and reported; it does not change any statistic. The workbook lists every pair with a "Redundant by rule" column.
+
 Every figure in the tables opens its derivation (counts, denominator, interval, test) in the notes column.
 
 ## Output

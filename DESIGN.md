@@ -19,6 +19,7 @@ colors:
   accent-soft: "#d5e8ed"
   focus: "#1b7f97"
   sel: "#fff3c4"
+  live: "#6fc39b"
   good: "#236b4c"
   good-bg: "#d7ebe0"
   mid: "#7a5700"

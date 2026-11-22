@@ -16,6 +16,8 @@
     singlesMode: 'table', combosMode: 'table', groupByClass: true,
     sort: { singles: { key: 'pS', dir: -1 }, combos: { key: 'pS', dir: -1 } },
     classFilter: '', query: '', comboAgent: '', comboSigOnly: false, comboShowAll: false, orgQuery: '',
+    comboRules: { on: true, sameClass: true, betaLactam: true, antiGramPos: true, exceptions: { ampCro: true, czaAtm: true, czErt: true, dblCarb: false }, keep: '' },
+    rulesOpen: false,
     sel: null, hlNote: null,
     prep: null, cache: new Map(), pendingSettings: null,
   };
@@ -42,6 +44,7 @@
     chart: '<svg class="i" viewBox="0 0 24 24"><path d="M4 6h3M4 12h9M4 18h6"/><circle cx="16" cy="6" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="13" cy="18" r="2"/></svg>',
     grid: '<svg class="i" viewBox="0 0 24 24"><path d="M4 4h4v4H4zM4 10h4v4H4zM10 10h4v4h-4zM4 16h4v4H4zM10 16h4v4h-4zM16 16h4v4h-4z"/></svg>',
     x: '<svg class="i" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>',
+    chev: '<svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="m7 10 5 5 5-5"/></svg>',
   };
 
   function toast(msg) {
@@ -463,8 +466,14 @@
   }
 
   /* ---- combinations ---- */
+  function keepLines() { return S.comboRules.keep.split('\n').map((x) => x.trim()).filter(Boolean); }
+  function redund(c) {
+    const cr = S.comboRules;
+    return E.redundancy(c.a, agentClass(c.a), c.b, agentClass(c.b), { sameClass: cr.sameClass, betaLactam: cr.betaLactam, antiGramPos: cr.antiGramPos, exceptions: cr.exceptions, keep: keepLines() });
+  }
   function filteredCombos(r) {
     let rows = r.combos;
+    if (S.comboRules.on) rows = rows.filter((c) => !redund(c));
     if (S.comboAgent) rows = rows.filter((c) => c.a === S.comboAgent || c.b === S.comboAgent);
     if (S.query) { const q = S.query.toLowerCase(); rows = rows.filter((c) => (c.a + ' ' + c.b).toLowerCase().includes(q)); }
     if (S.comboSigOnly) rows = rows.filter((c) => c.pValA < 0.05 && c.pValB < 0.05);
@@ -472,10 +481,12 @@
   }
   function viewCombos(r) {
     const rows = filteredCombos(r);
-    const head = `<div class="sheet-head"><h1>Combinations</h1><span class="sub">${esc(subsetLabel())} · ${fmtInt(r.n)} isolates · ${r.combos.length} pairs</span><span class="grow"></span>
+    const nRed = r.combos.filter((c) => redund(c)).length;
+    const head = `<div class="sheet-head"><h1>Combinations</h1><span class="sub">${esc(subsetLabel())} · ${fmtInt(r.n)} isolates · ${r.combos.length} pairs${S.comboRules.on && nRed ? `, ${nRed} hidden as redundant` : ''}</span><span class="grow"></span>
       <div class="filters"><label>With <select id="in-cagent"><option value="">any agent</option>${r.kept.map((a) => `<option ${a === S.comboAgent ? 'selected' : ''}>${esc(a)}</option>`).join('')}</select></label>
       <label><input type="search" id="in-q" placeholder="Find pair" value="${esc(S.query)}" style="width:140px"></label>
-      <label title="Exact McNemar p < 0.05 against both components, no multiplicity correction"><input type="checkbox" id="in-sig" ${S.comboSigOnly ? 'checked' : ''}> Adds coverage to both (p&lt;0.05)</label></div></div>${warnings(r)}`;
+      <label title="Exact McNemar p < 0.05 against both components, no multiplicity correction"><input type="checkbox" id="in-sig" ${S.comboSigOnly ? 'checked' : ''}> Adds coverage to both (p&lt;0.05)</label>
+      <label><input type="checkbox" id="in-red" ${S.comboRules.on ? 'checked' : ''}> Hide redundant pairs (${nRed})</label><button class="btn small" data-action="rules-toggle" type="button" aria-expanded="${S.rulesOpen}">Rules${ICON.chev}</button><button class="nref" data-note="10" type="button" aria-label="Note 10">10</button></div></div>${S.rulesOpen ? rulesPanel() : ''}${warnings(r)}`;
     $('#view-tools').innerHTML = modeToggle('combosMode', [['table', 'Table', ICON.table], ['matrix', 'Matrix', ICON.grid]], S.combosMode);
     if (S.combosMode === 'matrix') {
       $('#sheet').innerHTML = head + `<div class="figure" id="figure">${comboFigure(r)}</div><p class="hint" style="padding:0 16px 16px;margin:0;color:var(--ink-3);font-size:var(--t-xs)">Select a cell for its derivation.</p>`;
@@ -500,6 +511,21 @@
       ${rows.length > lim ? `<div style="padding:12px 16px"><button class="btn small" data-action="combo-all" type="button">Show all ${fmtInt(rows.length)} pairs</button></div>` : ''}
       ${rows.length ? '' : '<p class="muted" style="padding:16px;margin:0">No combinations match.</p>'}`;
   }
+  function rulesPanel() {
+    const cr = S.comboRules;
+    const cb = (key, label, hint) => `<label class="rule"><input type="checkbox" data-rule="${key}" ${cr[key] ? 'checked' : ''}><span><b>${label}</b><small>${hint}</small></span></label>`;
+    return `<div class="rules-panel">
+      <fieldset><legend>Hide a pair when it is</legend>
+        ${cb('sameClass', 'Two agents of the same class', 'Two cephalosporins, two aminoglycosides, two fluoroquinolones…')}
+        ${cb('betaLactam', 'Two β-lactams of different classes', 'Penicillin, cephalosporin, carbapenem or monobactam pairs, e.g. cefepime + meropenem')}
+        ${cb('antiGramPos', 'Two anti-Gram-positive agents', 'Glycopeptide, lipopeptide or oxazolidinone pairs, e.g. vancomycin + linezolid')}
+      </fieldset>
+      <fieldset><legend>Keep despite the rules</legend>
+        ${E.COMBO_EXCEPTIONS.map((x) => `<label class="rule"><input type="checkbox" data-exc="${x.id}" ${cr.exceptions[x.id] ? 'checked' : ''}><span><b>${esc(x.label)}</b><small>${esc(x.note)} · <a href="https://doi.org/${x.doi}" target="_blank" rel="noopener">doi:${x.doi}</a></small></span></label>`).join('')}
+        <label class="rule-keep" for="in-keep"><span>Other pairs to keep, one per line as “agent + agent” (partial names work)</span>
+        <textarea id="in-keep" rows="2" placeholder="e.g. ampicillin + gentamicin">${esc(cr.keep)}</textarea></label>
+      </fieldset></div>`;
+  }
   function orderedAgents(r) {
     const list = r.singles.map((s) => ({ agent: s.agent, cls: s.cls }));
     const ord = (c) => E.DISPLAY_CLASS_ORDER.indexOf(c);
@@ -510,7 +536,8 @@
     return CH.comboMatrix(orderedAgents(r), r.singles, r.combos, {
       title: `Two-drug combinations · ${subsetLabel()} (n = ${r.n})`,
       subtitle: `% susceptible to at least one agent, denominator: tested for ${S.params.combDen === 'both' ? 'both agents' : 'at least one agent'}`,
-      thresholds: th(), footnote: figFoot(),
+      thresholds: th(), footnote: figFoot() + (S.comboRules.on ? ' Grey: redundant pair, hidden by rule.' : ''),
+      hidden: S.comboRules.on ? (a, b) => { const c = r.combos.find((x) => (x.a === a && x.b === b) || (x.a === b && x.b === a)); return !!(c && redund(c)); } : null,
     });
   }
 
@@ -576,11 +603,20 @@
       `<b>Jeffreys ${confPct()}% interval</b>: quantiles of Beta(S + ½, failures + ½); lower bound 0 when S = 0, upper bound 100 when there are no failures.`,
       p.threshold > 0 ? `Agents tested in fewer than <b>${p.threshold}%</b> of the subset's isolates are left out.${r.dropped.length ? ` Here: ${r.dropped.map((d) => esc(d.agent)).join(', ')}.` : ''}` : `No minimum-tested threshold: every agent with at least one result is analysed.`,
       `A <b>combination</b> counts as S when either agent is S. Denominator: isolates tested for ${p.combDen === 'both' ? 'both agents' : 'at least one agent (v1 rule)'}. “Not S” includes R to both${p.combDen === 'both' ? '' : ' and R to one with the other untested'}.`,
-      `<b>Gain vs an agent</b>: isolates R to that agent and S to its partner, over isolates tested for that agent. p: exact two-sided McNemar on the same isolates; not adjusted for multiple comparisons.`,
+      `<b>Gain vs an agent</b> (“gained” in the derivation): isolates R to that agent and S to its partner, over isolates tested for that agent. p: exact two-sided McNemar on the same isolates; not adjusted for multiple comparisons.`,
       `<b>Repeat isolates</b>: ${dedupTxt}`,
       `<b>Groups</b> from the organism map: exact name first, otherwise the longest map entry found at the start of a word. Fungi and unclassified names are outside the Gram subsets.`,
       `<b>Colour bands</b>: green ≥ ${p.good}%, amber ${p.mid}–${p.good}%, red &lt; ${p.mid}%. The number is always printed.`,
+      redundNote(),
     ];
+  }
+  function redundNote() {
+    const cr = S.comboRules;
+    if (!cr.on) return `<b>Redundant pairs</b> are shown (filter off). Statistics never depend on this filter.`;
+    const rules = [cr.sameClass && 'same class', cr.betaLactam && 'two β-lactams', cr.antiGramPos && 'two anti-Gram-positive agents'].filter(Boolean);
+    const ex = E.COMBO_EXCEPTIONS.filter((x) => cr.exceptions[x.id]).map((x) => esc(x.label.toLowerCase()));
+    const keep = keepLines();
+    return `<b>Redundant pairs hidden</b> (${rules.join(', ') || 'no rule active'}), by the class of each agent set in step 2. Kept anyway: ${ex.concat(keep.map(esc)).join('; ') || 'none'}. Hiding changes which rows are shown, not any statistic.`;
   }
   function derivation(r) {
     const sel = S.sel;
@@ -602,22 +638,23 @@ CI ${pct(s.glo)}–${pct(s.ghi)}%, Beta(${s.s + 0.5}, ${s.n - s.s + 0.5})</div><
       const c = r.combos.find((x) => x.a === ka && x.b === kb);
       if (!c) return '';
       const A = r.singles.find((x) => x.agent === c.a), B = r.singles.find((x) => x.agent === c.b);
-      return `<div class="deriv"><h4>${esc(c.a)} + ${esc(c.b)}</h4><dl>
+      const rd = redund(c);
+      return `<div class="deriv"><h4>${esc(c.a)} + ${esc(c.b)}</h4>${rd ? `<p class="redund">Redundant by rule: ${esc(rd.reason)}.</p>` : ''}<dl>
         <dt>Tested (${S.params.combDen === 'both' ? 'both' : '≥1'})</dt><dd>${fmtInt(c.tested)}</dd><dt>Tested for both</dt><dd>${fmtInt(c.bothTested)}</dd>
         <dt>S to either</dt><dd>${fmtInt(c.s)}</dd><dt>R to both</dt><dd>${fmtInt(c.bothR)}</dd>${S.params.combDen === 'both' ? '' : `<dt>R to one, other untested</dt><dd>${fmtInt(c.rN)}</dd>`}</dl>
         <div class="eq">%S = ${c.s} / ${c.tested} = ${pct(c.pS, 2)}%
 CI ${pct(c.lo)}–${pct(c.hi)}%
 Coverage = ${c.sG} / ${c.n} = ${pct(c.pG, 2)}%
 
-vs ${c.a}: ${A.s} S of ${A.tested} tested
- + ${c.gainA} R to ${c.a}, S to ${c.b}
- = ${A.s + c.gainA}/${A.tested} = ${pct(c.pA, 2)}%  (+${pct(c.deltaA, 2)} pp)
- McNemar exact p ${pEq(c.pValA)}
+vs ${c.a}
+ ${A.s}/${A.tested} S + ${c.gainA} gained
+ = ${A.s + c.gainA}/${A.tested} = ${pct(c.pA)}% (+${pct(c.deltaA)} pp)
+ McNemar p ${pEq(c.pValA)}
 
-vs ${c.b}: ${B.s} S of ${B.tested} tested
- + ${c.gainB} R to ${c.b}, S to ${c.a}
- = ${B.s + c.gainB}/${B.tested} = ${pct(c.pB, 2)}%  (+${pct(c.deltaB, 2)} pp)
- McNemar exact p ${pEq(c.pValB)}</div></div>`;
+vs ${c.b}
+ ${B.s}/${B.tested} S + ${c.gainB} gained
+ = ${B.s + c.gainB}/${B.tested} = ${pct(c.pB)}% (+${pct(c.deltaB)} pp)
+ McNemar p ${pEq(c.pValB)}</div></div>`;
     }
     if (sel.kind === 'abg') {
       const [org, ag] = sel.key.split('\t');
@@ -653,6 +690,7 @@ ${confPct()}% CI ${s + rr ? pct(lo, 1) + '–' + pct(hi, 1) : '–'}%</div></div
       'Coverage %': round(c.pG * 100), 'Coverage CI low': round(c.glo * 100), 'Coverage CI high': round(c.ghi * 100),
       'Gain vs agent 1 (isolates)': c.gainA, 'Gain vs agent 1 (pp)': round(c.deltaA * 100), 'p vs agent 1 (McNemar exact)': sig(c.pValA),
       'Gain vs agent 2 (isolates)': c.gainB, 'Gain vs agent 2 (pp)': round(c.deltaB * 100), 'p vs agent 2 (McNemar exact)': sig(c.pValB),
+      'Redundant by rule': (redund(c) || {}).reason || '',
     }));
   }
   function round(x) { return isFinite(x) ? Math.round(x * 100) / 100 : null; }
@@ -779,7 +817,7 @@ ${confPct()}% CI ${s + rr ? pct(lo, 1) + '–' + pct(hi, 1) : '–'}%</div></div
     toast('Organism map exported');
   }
   function settingsObj() {
-    return { app: 'susceptibility-index', version: 2, mapping: S.map ? { orgCol: S.map.orgCol, patientCol: S.map.patientCol, dateCol: S.map.dateCol, agents: S.map.agents.map((a) => ({ name: a.name, include: a.include, cls: a.cls })) } : null, params: S.params, exclusions: S.exclusions, organismOverrides: S.overrides };
+    return { app: 'susceptibility-index', version: 2, mapping: S.map ? { orgCol: S.map.orgCol, patientCol: S.map.patientCol, dateCol: S.map.dateCol, agents: S.map.agents.map((a) => ({ name: a.name, include: a.include, cls: a.cls })) } : null, params: S.params, exclusions: S.exclusions, organismOverrides: S.overrides, comboRules: S.comboRules };
   }
   function exportSettings() {
     download(new Blob([JSON.stringify(settingsObj(), null, 2)], { type: 'application/json' }), `${baseName()}_settings.json`);
@@ -790,6 +828,7 @@ ${confPct()}% CI ${s + rr ? pct(lo, 1) + '–' + pct(hi, 1) : '–'}%</div></div
     Object.assign(S.params, o.params || {});
     S.exclusions = o.exclusions || '';
     S.overrides = Array.isArray(o.organismOverrides) ? o.organismOverrides : [];
+    if (o.comboRules) S.comboRules = Object.assign({}, S.comboRules, o.comboRules, { exceptions: Object.assign({}, S.comboRules.exceptions, o.comboRules.exceptions || {}) });
     if (o.mapping && S.file) {
       const cols = new Set(S.file.columns);
       const m = o.mapping;
@@ -805,13 +844,13 @@ ${confPct()}% CI ${s + rr ? pct(lo, 1) + '–' + pct(hi, 1) : '–'}%</div></div
   function printReport() {
     const r = resultsFor(S.subset);
     const notes = methodNotes(r);
-    const top = r.combos.slice(0, 25);
+    const top = (S.comboRules.on ? r.combos.filter((c) => !redund(c)) : r.combos).slice(0, 25);
     $('#report').innerHTML = `<h1>Susceptibility Index · ${esc(subsetLabel())}</h1>
       <div class="meta">${esc(S.file.name)}${S.file.synthetic ? ' (synthetic demo data)' : ''} · ${fmtInt(r.n)} isolates · ${new Date().toISOString().slice(0, 10)}</div>
       <h2>Single agents</h2><table><thead><tr><th>Agent</th><th>Class</th><th class="num">Tested</th><th class="num">S</th><th class="num">R</th><th class="num">%S (${confPct()}% CI)</th><th class="num">Coverage (CI)</th></tr></thead>
       <tbody>${r.singles.map((s) => `<tr><td>${esc(s.agent)}</td><td>${esc(s.cls)}</td><td class="num">${s.tested}</td><td class="num">${s.s}</td><td class="num">${s.r}</td><td class="num">${pct(s.pS)} (${pct(s.lo)}–${pct(s.hi)})</td><td class="num">${pct(s.pG)} (${pct(s.glo)}–${pct(s.ghi)})</td></tr>`).join('')}</tbody></table>
       <div class="fig">${singlesFigure(r, r.singles)}</div>
-      <h2>Top ${top.length} combinations by %S</h2><table><thead><tr><th>Combination</th><th class="num">Tested</th><th class="num">S</th><th class="num">%S (CI)</th><th class="num">Coverage</th><th class="num">Gain vs 1st (p)</th><th class="num">Gain vs 2nd (p)</th></tr></thead>
+      <h2>Top ${top.length} combinations by %S${S.comboRules.on ? ', redundant pairs excluded' : ''}</h2><table><thead><tr><th>Combination</th><th class="num">Tested</th><th class="num">S</th><th class="num">%S (CI)</th><th class="num">Coverage</th><th class="num">Gain vs 1st (p)</th><th class="num">Gain vs 2nd (p)</th></tr></thead>
       <tbody>${top.map((c) => `<tr><td>${esc(c.a)} + ${esc(c.b)}</td><td class="num">${c.tested}</td><td class="num">${c.s}</td><td class="num">${pct(c.pS)} (${pct(c.lo)}–${pct(c.hi)})</td><td class="num">${pct(c.pG)}</td><td class="num">+${pct(c.deltaA)} (${pval(c.pValA)})</td><td class="num">+${pct(c.deltaB)} (${pval(c.pValB)})</td></tr>`).join('')}</tbody></table>
       <h2>Methods</h2><ol>${notes.map((t) => `<li>${t}</li>`).join('')}</ol>`;
     window.print();
@@ -833,6 +872,7 @@ ${confPct()}% CI ${s + rr ? pct(lo, 1) + '–' + pct(hi, 1) : '–'}%</div></div
       if (act === 'excl-file') { $('#file-excl').click(); return; }
       if (act === 'ag-all' || act === 'ag-none') { S.map.agents.forEach((a) => { a.include = act === 'ag-all'; }); renderCols(); schedule(true, true); return; }
       if (act === 'view-org') { S.view = 'org'; renderMain(); return; }
+      if (act === 'rules-toggle') { S.rulesOpen = !S.rulesOpen; renderMain(); return; }
       if (act === 'combo-all') { S.comboShowAll = true; renderMain(); return; }
       if (act === 'map-import') { $('#file-map').click(); return; }
       if (act === 'map-reset') { S.gramMap = (window.SI_DEFAULT_GRAM_MAP || []).map((x) => x.slice()); S.overrides = []; schedule(true, true); toast('Bundled organism map restored'); return; }
@@ -907,6 +947,9 @@ ${confPct()}% CI ${s + rr ? pct(lo, 1) + '–' + pct(hi, 1) : '–'}%</div></div
       if (t.id === 'in-group') { S.groupByClass = t.checked; renderMain(); return; }
       if (t.id === 'in-cagent') { S.comboAgent = t.value; renderMain(); return; }
       if (t.id === 'in-sig') { S.comboSigOnly = t.checked; renderMain(); return; }
+      if (t.id === 'in-red') { S.comboRules.on = t.checked; renderMain(); return; }
+      if (t.dataset.rule) { S.comboRules[t.dataset.rule] = t.checked; renderMain(); return; }
+      if (t.dataset.exc) { S.comboRules.exceptions[t.dataset.exc] = t.checked; renderMain(); return; }
       if (t.id === 'in-abgby') { S.params.abgBy = t.value; S.sel = null; renderMain(); return; }
       if (t.id === 'in-abgmin') { S.params.abgMin = Math.max(1, +t.value || 1); renderMain(); return; }
       if (t.id === 'in-abgmt') { S.params.abgMinTested = Math.max(1, +t.value || 1); renderMain(); return; }
@@ -919,6 +962,7 @@ ${confPct()}% CI ${s + rr ? pct(lo, 1) + '–' + pct(hi, 1) : '–'}%</div></div
         const other = t.id === 'in-thr' ? $('#in-thr-n') : $('#in-thr'); if (other) other.value = v;
         schedule(false, false); return;
       }
+      if (t.id === 'in-keep') { S.comboRules.keep = t.value; clearTimeout(bind._k); bind._k = setTimeout(() => { renderMain(); const q = $('#in-keep'); if (q) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }, 400); return; }
       if (t.id === 'in-excl') { S.exclusions = t.value; clearTimeout(bind._x); bind._x = setTimeout(() => schedule(true, true), 300); return; }
       if (t.id === 'in-q') { S.query = t.value; clearTimeout(bind._q); bind._q = setTimeout(() => { renderMain(); const q = $('#in-q'); if (q) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }, 180); return; }
       if (t.id === 'in-orgq') { S.orgQuery = t.value; clearTimeout(bind._o); bind._o = setTimeout(() => { renderMain(); const q = $('#in-orgq'); if (q) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }, 180); return; }
