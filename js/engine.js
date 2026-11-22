@@ -432,7 +432,47 @@
     };
   }
 
+  /* ---------- redundant combinations ---------- */
+
+  const BETA_LACTAMS = new Set(['Penicillins', 'Cephalosporins', 'Carbapenems', 'Monobactams']);
+  const ANTI_GRAMPOS = new Set(['Glycopeptides', 'Lipopeptides', 'Oxazolidinones']);
+  const has = (s, re) => re.test(String(s).toLowerCase());
+  // Clinically used pairs that the class rules would otherwise remove. Matching is on name stems (English and Italian).
+  const COMBO_EXCEPTIONS = [
+    { id: 'ampCro', label: 'Ampicillin + ceftriaxone or cefotaxime', note: 'E. faecalis endocarditis',
+      doi: '10.1093/cid/cit052', test: (a, b) => has(a, /ampic/) && !has(a, /sulbact/) && has(b, /ceftriax|cefotax/) },
+    { id: 'czaAtm', label: 'Ceftazidime-avibactam + aztreonam', note: 'metallo-β-lactamase producers',
+      doi: '10.1093/cid/ciaa586', test: (a, b) => has(a, /avibact/) && has(a, /ceftaz/) && has(b, /aztreon/) && !has(b, /avibact/) },
+    { id: 'czErt', label: 'Cefazolin + ertapenem', note: 'persistent MSSA bacteraemia, salvage',
+      doi: '10.1093/cid/ciz995', test: (a, b) => has(a, /cefazol/) && has(b, /ertapen/) },
+    { id: 'dblCarb', label: 'Ertapenem + meropenem, doripenem or imipenem', note: 'KPC salvage; limited in vitro benefit',
+      doi: '10.1007/s10096-017-2936-5', test: (a, b) => has(a, /ertapen/) && has(b, /meropen|doripen|imipen/) },
+  ];
+
+  function userPairMatch(line, a, b) {
+    const parts = String(line).split('+').map((x) => normName(x)).filter(Boolean);
+    if (parts.length !== 2) return false;
+    const na = normName(a), nb = normName(b);
+    return (na.includes(parts[0]) && nb.includes(parts[1])) || (na.includes(parts[1]) && nb.includes(parts[0]));
+  }
+
+  /*
+   * rules: { sameClass, betaLactam, antiGramPos: bool, exceptions: { id: bool }, keep: string[] ("A + B") }
+   * returns null when the pair is kept, else { rule, reason }
+   */
+  function redundancy(a, clsA, b, clsB, rules) {
+    for (const line of rules.keep || []) if (userPairMatch(line, a, b)) return null;
+    for (const ex of COMBO_EXCEPTIONS) {
+      if (rules.exceptions && rules.exceptions[ex.id] && (ex.test(a, b) || ex.test(b, a))) return null;
+    }
+    if (rules.sameClass && clsA === clsB && clsA !== 'Other') return { rule: 'sameClass', reason: `Two ${clsA.toLowerCase()}` };
+    if (rules.betaLactam && BETA_LACTAMS.has(clsA) && BETA_LACTAMS.has(clsB)) return { rule: 'betaLactam', reason: `Two β-lactams (${clsA.toLowerCase()} + ${clsB.toLowerCase()})` };
+    if (rules.antiGramPos && ANTI_GRAMPOS.has(clsA) && ANTI_GRAMPOS.has(clsB)) return { rule: 'antiGramPos', reason: `Overlapping anti-Gram-positive agents (${clsA.toLowerCase()} + ${clsB.toLowerCase()})` };
+    return null;
+  }
+
   const api = {
+    redundancy, COMBO_EXCEPTIONS,
     lgamma, ibeta, betaPpf, jeffreys, mcnemarExact, normalizeValue,
     buildClassifier, genusOf, speciesOf, guessClass, CLASS_ORDER, DISPLAY_CLASS_ORDER,
     prepare, subsetIsolates, analyze, antibiogram, summary, testedFraction, normName,
