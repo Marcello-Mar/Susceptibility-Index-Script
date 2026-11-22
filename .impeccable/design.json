@@ -1,0 +1,788 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-22T10:24:07Z",
+  "title": "Design System: Susceptibility Index",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Cool Ground",
+        "canonical": "#e9eef1",
+        "oklch": "oklch(94.6% 0.007 234)",
+        "tonalRamp": [
+          "#0a0b0c",
+          "#232527",
+          "#3f4244",
+          "#5e6264",
+          "#7f8385",
+          "#a2a6a8",
+          "#c7c9cb",
+          "#edeff0"
+        ],
+        "cssVar": "--ground"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#fbfcfd",
+        "oklch": "oklch(99.1% 0.002 248)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#414243",
+          "#606162",
+          "#818283",
+          "#a4a5a6",
+          "#c8c9ca",
+          "#eeeeef"
+        ],
+        "cssVar": "--paper"
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "Paper Shade",
+        "canonical": "#f3f6f8",
+        "oklch": "oklch(97.1% 0.004 236)",
+        "tonalRamp": [
+          "#0a0b0c",
+          "#242526",
+          "#404243",
+          "#5f6263",
+          "#808384",
+          "#a3a5a7",
+          "#c8c9ca",
+          "#edefef"
+        ],
+        "cssVar": "--paper-2"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Petrol Ink",
+        "canonical": "#13252d",
+        "oklch": "oklch(25.3% 0.028 228)",
+        "tonalRamp": [
+          "#060c0f",
+          "#1d272b",
+          "#37444b",
+          "#52646d",
+          "#73868f",
+          "#98a8b0",
+          "#bfcbd2",
+          "#e7f0f5"
+        ],
+        "cssVar": "--ink"
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Slate Ink",
+        "canonical": "#4a626d",
+        "oklch": "oklch(48.1% 0.034 228)",
+        "tonalRamp": [
+          "#050c10",
+          "#1b272d",
+          "#34454d",
+          "#4f656f",
+          "#708691",
+          "#95a9b2",
+          "#bdccd3",
+          "#e5f1f6"
+        ],
+        "cssVar": "--ink-2"
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Mist Ink",
+        "canonical": "#6d838d",
+        "oklch": "oklch(59.6% 0.030 227)",
+        "tonalRamp": [
+          "#060c0f",
+          "#1c272c",
+          "#36454b",
+          "#51656d",
+          "#72868f",
+          "#97a8b0",
+          "#beccd2",
+          "#e6f0f5"
+        ],
+        "cssVar": "--ink-3"
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline Rule",
+        "canonical": "#cfd9de",
+        "oklch": "oklch(87.9% 0.013 229)",
+        "tonalRamp": [
+          "#090c0d",
+          "#212628",
+          "#3d4346",
+          "#5b6367",
+          "#7b8488",
+          "#9fa6aa",
+          "#c4cacd",
+          "#ebeff1"
+        ],
+        "cssVar": "--rule"
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "#93a7b0",
+        "oklch": "oklch(71.6% 0.026 227)",
+        "tonalRamp": [
+          "#070c0f",
+          "#1d272b",
+          "#37444a",
+          "#53646c",
+          "#74868d",
+          "#99a8af",
+          "#bfcbd1",
+          "#e7f0f4"
+        ],
+        "cssVar": "--rule-strong"
+      },
+      "band": {
+        "role": "primary",
+        "displayName": "Petrol Ink Band",
+        "canonical": "#0d3743",
+        "oklch": "oklch(31.4% 0.049 221)",
+        "tonalRamp": [
+          "#030d11",
+          "#14282f",
+          "#2b4750",
+          "#436773",
+          "#648996",
+          "#8cabb6",
+          "#b6ced7",
+          "#e0f2f8"
+        ],
+        "cssVar": "--band"
+      },
+      "band-2": {
+        "role": "primary",
+        "displayName": "Petrol Band Raised",
+        "canonical": "#134a58",
+        "oklch": "oklch(38.1% 0.060 219)",
+        "tonalRamp": [
+          "#010e12",
+          "#0e2930",
+          "#244852",
+          "#3b6976",
+          "#5c8b99",
+          "#86acb8",
+          "#b1cfd9",
+          "#ddf3fa"
+        ],
+        "cssVar": "--band-2"
+      },
+      "band-ink": {
+        "role": "primary",
+        "displayName": "Band Text",
+        "canonical": "#e6f1f4",
+        "oklch": "oklch(95.1% 0.012 216)",
+        "tonalRamp": [
+          "#090c0d",
+          "#212627",
+          "#3d4345",
+          "#5a6365",
+          "#7b8487",
+          "#9fa7a9",
+          "#c4cacc",
+          "#ebeff1"
+        ],
+        "cssVar": "--band-ink"
+      },
+      "band-ink-2": {
+        "role": "primary",
+        "displayName": "Band Text Muted",
+        "canonical": "#a5c4cc",
+        "oklch": "oklch(80.0% 0.035 215)",
+        "tonalRamp": [
+          "#050d0f",
+          "#19282b",
+          "#32464b",
+          "#4c666d",
+          "#6d888f",
+          "#93aaaf",
+          "#bbcdd2",
+          "#e4f1f5"
+        ],
+        "cssVar": "--band-ink-2"
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Petrol Teal",
+        "canonical": "#0f5c6e",
+        "oklch": "oklch(44.0% 0.074 218)",
+        "tonalRamp": [
+          "#000e14",
+          "#052a33",
+          "#184956",
+          "#2d6a7b",
+          "#508c9e",
+          "#7daebd",
+          "#aad1dc",
+          "#d8f4fd"
+        ],
+        "cssVar": "--accent"
+      },
+      "accent-ink": {
+        "role": "primary",
+        "displayName": "On Teal",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ],
+        "cssVar": "--accent-ink"
+      },
+      "accent-soft": {
+        "role": "primary",
+        "displayName": "Teal Wash",
+        "canonical": "#d5e8ed",
+        "oklch": "oklch(91.8% 0.021 215)",
+        "tonalRamp": [
+          "#070c0e",
+          "#1e2729",
+          "#394447",
+          "#556468",
+          "#76868a",
+          "#9aa8ab",
+          "#c1cbce",
+          "#e8f0f2"
+        ],
+        "cssVar": "--accent-soft"
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus Teal",
+        "canonical": "#1b7f97",
+        "oklch": "oklch(55.3% 0.093 219)",
+        "tonalRamp": [
+          "#000e16",
+          "#002b37",
+          "#004a5b",
+          "#0f6c82",
+          "#3d8ea5",
+          "#71b0c3",
+          "#a2d2e1",
+          "#d3f5ff"
+        ],
+        "cssVar": "--focus"
+      },
+      "sel": {
+        "role": "neutral",
+        "displayName": "Selection Butter",
+        "canonical": "#fff3c4",
+        "oklch": "oklch(96.2% 0.062 95)",
+        "tonalRamp": [
+          "#0e0b01",
+          "#2a250f",
+          "#494224",
+          "#6b613b",
+          "#8d825b",
+          "#aea584",
+          "#d0c9af",
+          "#f4efdc"
+        ],
+        "cssVar": "--sel"
+      },
+      "good": {
+        "role": "secondary",
+        "displayName": "Susceptible Green",
+        "canonical": "#236b4c",
+        "oklch": "oklch(47.4% 0.088 161)",
+        "tonalRamp": [
+          "#001006",
+          "#072d1d",
+          "#1b4d37",
+          "#316f53",
+          "#539173",
+          "#80b298",
+          "#add4bf",
+          "#daf7e7"
+        ],
+        "cssVar": "--good"
+      },
+      "good-bg": {
+        "role": "secondary",
+        "displayName": "Susceptible Tint",
+        "canonical": "#d7ebe0",
+        "oklch": "oklch(92.2% 0.026 162)",
+        "tonalRamp": [
+          "#070d0a",
+          "#1f2723",
+          "#39453f",
+          "#56665d",
+          "#76877e",
+          "#9ba9a1",
+          "#c1ccc6",
+          "#e8f1ec"
+        ],
+        "cssVar": "--good-bg"
+      },
+      "mid": {
+        "role": "secondary",
+        "displayName": "Intermediate Amber",
+        "canonical": "#7a5700",
+        "oklch": "oklch(48.1% 0.099 81)",
+        "tonalRamp": [
+          "#140900",
+          "#332100",
+          "#563d06",
+          "#7b5b18",
+          "#9e7d3e",
+          "#bda16f",
+          "#ddc69f",
+          "#fdecd0"
+        ],
+        "cssVar": "--mid"
+      },
+      "mid-bg": {
+        "role": "secondary",
+        "displayName": "Amber Tint",
+        "canonical": "#f4e6bf",
+        "oklch": "oklch(92.6% 0.053 91)",
+        "tonalRamp": [
+          "#0f0b02",
+          "#2b2413",
+          "#4a4129",
+          "#6c6041",
+          "#8d8261",
+          "#aea589",
+          "#d1c9b3",
+          "#f4eede"
+        ],
+        "cssVar": "--mid-bg"
+      },
+      "low": {
+        "role": "secondary",
+        "displayName": "Resistant Brick",
+        "canonical": "#9c2f27",
+        "oklch": "oklch(46.9% 0.146 28)",
+        "tonalRamp": [
+          "#1f0000",
+          "#460e0b",
+          "#71241e",
+          "#9f3c33",
+          "#c65f53",
+          "#e18a7e",
+          "#fcb4aa",
+          "#ffe0d8"
+        ],
+        "cssVar": "--low"
+      },
+      "low-bg": {
+        "role": "secondary",
+        "displayName": "Brick Tint",
+        "canonical": "#f4d6d1",
+        "oklch": "oklch(90.0% 0.034 29)",
+        "tonalRamp": [
+          "#110908",
+          "#2e211f",
+          "#4f3d3a",
+          "#725b57",
+          "#947c78",
+          "#b59f9c",
+          "#d6c5c2",
+          "#f8ebe9"
+        ],
+        "cssVar": "--low-bg"
+      },
+      "na-bg": {
+        "role": "secondary",
+        "displayName": "Untested Grey",
+        "canonical": "#eef1f3",
+        "oklch": "oklch(95.6% 0.004 236)",
+        "tonalRamp": [
+          "#0a0b0c",
+          "#242526",
+          "#404243",
+          "#5f6263",
+          "#808384",
+          "#a3a5a7",
+          "#c8c9ca",
+          "#edefef"
+        ],
+        "cssVar": "--na-bg"
+      },
+      "gram-positive": {
+        "role": "tertiary",
+        "displayName": "Gram-positive Violet",
+        "canonical": "#5b3f9a",
+        "oklch": "oklch(44.7% 0.142 294)",
+        "tonalRamp": [
+          "#0e0421",
+          "#281a49",
+          "#463474",
+          "#674fa3",
+          "#8771c8",
+          "#a998e2",
+          "#ccbffb",
+          "#f0e8ff"
+        ],
+        "cssVar": "--gpos"
+      },
+      "gram-negative": {
+        "role": "tertiary",
+        "displayName": "Gram-negative Raspberry",
+        "canonical": "#b3325a",
+        "oklch": "oklch(52.3% 0.167 6)",
+        "tonalRamp": [
+          "#200007",
+          "#48051d",
+          "#741a37",
+          "#a43053",
+          "#cb5473",
+          "#e68298",
+          "#ffafbf",
+          "#ffdce7"
+        ],
+        "cssVar": "--gneg"
+      },
+      "gram-fungus": {
+        "role": "tertiary",
+        "displayName": "Fungus Olive",
+        "canonical": "#7b6a2c",
+        "oklch": "oklch(52.7% 0.084 94)",
+        "tonalRamp": [
+          "#100b00",
+          "#2d2404",
+          "#4d4115",
+          "#706029",
+          "#91824a",
+          "#b2a578",
+          "#d3c9a6",
+          "#f6efd5"
+        ],
+        "cssVar": "--gfun"
+      },
+      "gram-unclassified": {
+        "role": "tertiary",
+        "displayName": "Unclassified Grey",
+        "canonical": "#6d838d",
+        "oklch": "oklch(59.6% 0.030 227)",
+        "tonalRamp": [
+          "#060c0f",
+          "#1c272c",
+          "#36454b",
+          "#51656d",
+          "#72868f",
+          "#97a8b0",
+          "#beccd2",
+          "#e6f0f5"
+        ],
+        "cssVar": "--gunc"
+      }
+    },
+    "classBands": {
+      "purpose": "Per-antibiotic-class pairs set on [data-class] in css/app.css: --cb tints class header rows and antibiogram column heads, --ce colours class labels and the 8px class square. Mirrored as literal hex in js/charts.js for SVG/PNG export.",
+      "pairs": {
+        "Penicillins": {
+          "tint": "#dce7f5",
+          "edge": "#2f5f9e"
+        },
+        "Cephalosporins": {
+          "tint": "#e2def4",
+          "edge": "#5a46a8"
+        },
+        "Carbapenems": {
+          "tint": "#f3dce7",
+          "edge": "#a3365f"
+        },
+        "Monobactams": {
+          "tint": "#eedff0",
+          "edge": "#86468f"
+        },
+        "Aminoglycosides": {
+          "tint": "#d9eee3",
+          "edge": "#2c7652"
+        },
+        "Fluoroquinolones": {
+          "tint": "#f3e6cf",
+          "edge": "#8c5b12"
+        },
+        "Glycopeptides": {
+          "tint": "#d6eaee",
+          "edge": "#1d6b7c"
+        },
+        "Lipopeptides": {
+          "tint": "#e3edd5",
+          "edge": "#557a24"
+        },
+        "Oxazolidinones": {
+          "tint": "#efe9cf",
+          "edge": "#7d6a14"
+        },
+        "Macrolides & lincosamides": {
+          "tint": "#f3ddd5",
+          "edge": "#9b4a2e"
+        },
+        "Streptogramins": {
+          "tint": "#f0e0da",
+          "edge": "#8a4b3b"
+        },
+        "Tetracyclines": {
+          "tint": "#e7e3d8",
+          "edge": "#6b5d3b"
+        },
+        "Folate pathway inhibitors": {
+          "tint": "#e0e7ef",
+          "edge": "#46607e"
+        },
+        "Polymyxins": {
+          "tint": "#e8dcef",
+          "edge": "#74468c"
+        },
+        "Fosfomycin": {
+          "tint": "#dfecec",
+          "edge": "#3c6f6f"
+        },
+        "Nitrofurans": {
+          "tint": "#ece6d6",
+          "edge": "#75652f"
+        },
+        "Rifamycins": {
+          "tint": "#f4e0d7",
+          "edge": "#a14d22"
+        },
+        "Fusidanes": {
+          "tint": "#e2e8dc",
+          "edge": "#4d6838"
+        },
+        "Nitroimidazoles": {
+          "tint": "#e6e1ea",
+          "edge": "#5d5070"
+        },
+        "Amphenicols": {
+          "tint": "#e9e4dc",
+          "edge": "#665a46"
+        },
+        "Other": {
+          "tint": "#e7ebee",
+          "edge": "#5d6f78"
+        }
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Sheet titles; 1.5rem on the empty-state title."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sheet section, ledger and derivation heads."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Base text, 1.45 leading, prose capped at 62ch."
+      },
+      "table": {
+        "displayName": "Table",
+        "purpose": "Reference tables, controls, buttons, notes."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, table heads (650), hints (400)."
+      },
+      "section-caps": {
+        "displayName": "Section Caps",
+        "purpose": "Numbered rail step headings, uppercase."
+      },
+      "class-caps": {
+        "displayName": "Class Caps",
+        "purpose": "Antibiotic class band rows, uppercase, in the class edge colour."
+      },
+      "derivation": {
+        "displayName": "Derivation Mono",
+        "purpose": "Derivation equations in the notes column only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "popover",
+        "value": "0 10px 30px -8px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.1)",
+        "purpose": "Export menu only."
+      },
+      {
+        "name": "toast",
+        "value": "0 8px 24px -6px rgba(0,0,0,0.35)",
+        "purpose": "Status toast only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All transitions and the derivation flash."
+      },
+      {
+        "name": "state-transition",
+        "value": "150ms",
+        "purpose": "Background and border changes on buttons and drop zone."
+      },
+      {
+        "name": "derivation-flash",
+        "value": "220ms, from #fff8d9 to transparent",
+        "purpose": "Derivation block highlight when its content changes."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation and transition none",
+        "purpose": "Honoured under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1560px",
+        "note": "rail 296px, notes 260px below"
+      },
+      {
+        "name": "notes-stack",
+        "value": "1360px",
+        "note": "notes column moves under the sheet below"
+      },
+      {
+        "name": "rail-stack",
+        "value": "820px",
+        "note": "rail stacks above main; band buttons icon-only below"
+      }
+    ],
+    "focus": {
+      "value": "2px solid var(--focus), offset 2px",
+      "purpose": "Global :focus-visible ring."
+    }
+  },
+  "components": [
+    {
+      "name": "Button",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Default command button: paper fill, strong-rule stroke.",
+      "html": "<button class=\"ds-btn\">Load synthetic demo</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border:1px solid var(--rule-strong);border-radius:var(--r);background:var(--paper);color:var(--ink);font-size:var(--t-sm);font-family: var(--f-sans, system-ui, sans-serif);cursor:pointer;transition:background 150ms var(--ease),border-color 150ms var(--ease)}.ds-btn:hover{border-color:var(--ink-3);background:#fff}.ds-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one forward action on a surface (Choose a file).",
+      "html": "<button class=\"ds-btn-primary\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 15v4h16v-4M12 4v11M7.5 9.5 12 4l4.5 5.5\"/></svg>Choose a file</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border:1px solid var(--accent);border-radius:var(--r);background:var(--accent);color:var(--accent-ink);font-size:var(--t-sm);font-family: var(--f-sans, system-ui, sans-serif);cursor:pointer;transition:background 150ms var(--ease)}.ds-btn-primary:hover{background:#0b4b5a}.ds-btn-primary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Inline low-weight actions (All / None, From file).",
+      "html": "<button class=\"ds-btn-ghost\">All</button>",
+      "css": ".ds-btn-ghost{height:30px;padding:0 6px;border:1px solid transparent;border-radius:var(--r);background:transparent;color:var(--accent);font-size:var(--t-sm);font-family: var(--f-sans, system-ui, sans-serif);cursor:pointer}.ds-btn-ghost:hover{background:var(--accent-soft)}.ds-btn-ghost:focus-visible{outline:2px solid var(--focus);outline-offset:2px}"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "chip",
+      "refersTo": "segmented-on",
+      "description": "Mutually exclusive parameter choice; pressed segment in teal.",
+      "html": "<div class=\"ds-seg\"><button aria-pressed=\"true\">Count as S</button><button aria-pressed=\"false\">As R</button><button aria-pressed=\"false\">Not tested</button></div>",
+      "css": ".ds-seg{display:inline-flex;border:1px solid var(--rule-strong);border-radius:var(--r);overflow:hidden;background:var(--paper)}.ds-seg button{border:0;background:transparent;padding:0 10px;height:28px;cursor:pointer;font-size:var(--t-sm);font-family: var(--f-sans, system-ui, sans-serif);color:var(--ink-2)}.ds-seg button+button{border-left:1px solid var(--rule)}.ds-seg button:hover{background:var(--paper-2);color:var(--ink)}.ds-seg button[aria-pressed=\"true\"]{background:var(--accent);color:var(--accent-ink)}.ds-seg button:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labelled select or text input in the setup rail.",
+      "html": "<label class=\"ds-field\"><span>Organism</span><input type=\"text\" placeholder=\"Find agent\"></label>",
+      "css": ".ds-field{display:grid;gap:4px;font-family: var(--f-sans, system-ui, sans-serif);}.ds-field span{font-size:var(--t-xs);font-weight:600;color:var(--ink-2)}.ds-field input{height:30px;padding:0 8px;border:1px solid var(--rule-strong);border-radius:var(--r);background:var(--paper);color:var(--ink);font:inherit;font-size:var(--t-md)}.ds-field input:hover{border-color:var(--ink-3)}.ds-field input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}.ds-field input::placeholder{color:var(--ink-3)}"
+    },
+    {
+      "name": "Subset Tabs",
+      "kind": "nav",
+      "refersTo": "header-band",
+      "description": "Population switcher with Gram dots and counts; band-colour underline on the selected tab.",
+      "html": "<div class=\"ds-subsets\"><button aria-selected=\"true\"><b>All isolates</b><small>554</small></button><button aria-selected=\"false\"><i style=\"background:var(--gpos)\"></i><b>Gram-positive</b><small>272</small></button><button aria-selected=\"false\"><i style=\"background:var(--gneg)\"></i><b>Gram-negative</b><small>279</small></button></div>",
+      "css": ".ds-subsets{display:flex;padding:0 20px;background:var(--paper);border-bottom:1px solid var(--rule);font-family: var(--f-sans, system-ui, sans-serif);}.ds-subsets button{position:relative;border:0;background:none;padding:12px 14px 10px;cursor:pointer;font-size:var(--t-md);color:var(--ink-2)}.ds-subsets b{font-weight:600}.ds-subsets small{margin-left:6px;color:var(--ink-3);font-size:var(--t-xs)}.ds-subsets i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}.ds-subsets button:hover,.ds-subsets button[aria-selected=\"true\"]{color:var(--ink)}.ds-subsets button[aria-selected=\"true\"]::after{content:\"\";position:absolute;left:10px;right:10px;bottom:-1px;height:3px;background:var(--band)}.ds-subsets button:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}"
+    },
+    {
+      "name": "Reference Table Rows",
+      "kind": "custom",
+      "refersTo": "pct-good",
+      "description": "Signature: class band row, agent rows with class square, counts, threshold-tinted %S chip with printed value, interval, and note marker.",
+      "html": "<table class=\"ds-ref\"><thead><tr><th>Agent</th><th class=\"n\">S</th><th class=\"n\">%S &middot; 95% CI<button class=\"ds-nref\">1</button></th></tr></thead><tbody><tr class=\"cb\" style=\"--cb:#d9eee3;--ce:#2c7652\"><td colspan=\"3\">Aminoglycosides</td></tr><tr style=\"--ce:#2c7652\"><td><i></i>Amikacin</td><td class=\"n\">229</td><td class=\"n\"><span class=\"p good\">93.9</span> <small>90.3&ndash;96.4</small></td></tr><tr class=\"sel\" style=\"--ce:#2c7652\"><td><i></i>Gentamicin</td><td class=\"n\">316</td><td class=\"n\"><span class=\"p low\">65.8</span> <small>61.5&ndash;70.0</small></td></tr><tr style=\"--ce:#1d6b7c\"><td><i></i>Vancomycin</td><td class=\"n\">207</td><td class=\"n\"><span class=\"p mid\">87.7</span> <small>83.1&ndash;91.4</small></td></tr></tbody></table>",
+      "css": ".ds-ref{border-collapse:separate;border-spacing:0;font-size:var(--t-sm);font-family: var(--f-sans, system-ui, sans-serif);font-variant-numeric:tabular-nums;color:var(--ink);background:var(--paper)}.ds-ref th,.ds-ref td{padding:5px 8px;border-bottom:1px solid #e3e9ec;text-align:left;white-space:nowrap}.ds-ref thead th{background:var(--paper-2);border-bottom:1px solid var(--rule-strong);font-size:var(--t-xs);font-weight:650;color:var(--ink-2)}.ds-ref .n{text-align:right}.ds-ref tbody tr:hover td{background:#f4f8fa}.ds-ref tr.sel td{background:var(--sel)}.ds-ref tr.cb td{padding:3px 10px;background:var(--cb);border-bottom:1px solid var(--rule);font-size:.6875rem;font-weight:650;text-transform:uppercase;letter-spacing:.08em;color:var(--ce)}.ds-ref td i{display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--ce);margin-right:6px}.ds-ref small{color:var(--ink-2);font-size:var(--t-xs)}.ds-ref .p{display:inline-block;min-width:46px;padding:1px 6px;border-radius:2px;text-align:right;font-weight:600}.ds-ref .p.good{background:var(--good-bg);color:var(--good)}.ds-ref .p.mid{background:var(--mid-bg);color:var(--mid)}.ds-ref .p.low{background:var(--low-bg);color:var(--low)}.ds-nref{border:0;background:none;padding:0 2px;margin-left:2px;vertical-align:super;line-height:1;font-size:.68em;font-weight:650;color:var(--accent);cursor:pointer;border-radius:2px}.ds-nref:hover{background:var(--accent-soft)}.ds-nref:focus-visible{outline:2px solid var(--focus);outline-offset:1px}"
+    },
+    {
+      "name": "Derivation Note",
+      "kind": "custom",
+      "refersTo": "sheet",
+      "description": "Signature: notes-column derivation block opened by a note marker; ruled heading, definition list, monospace equation.",
+      "html": "<aside class=\"ds-notes\"><h2>Derivation</h2><div class=\"ds-deriv\"><h4>Ampicillin</h4><dl><dt>Isolates in subset</dt><dd>554</dd><dt>S</dt><dd>133</dd><dt>R</dt><dd>294</dd></dl><div class=\"eq\">%S = 133 / 427 = 31.15%\nCI 26.9&ndash;35.7%, Beta(133.5, 294.5)</div></div></aside>",
+      "css": ".ds-notes{width:280px;font-size:var(--t-sm);font-family: var(--f-sans, system-ui, sans-serif);color:var(--ink);font-variant-numeric:tabular-nums}.ds-notes h2{margin:0;padding:0 0 6px;font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);border-bottom:2px solid var(--ink)}.ds-deriv{padding:10px 0 12px;border-bottom:1px solid var(--rule)}.ds-deriv h4{margin:0 0 6px;font-size:var(--t-md);font-weight:650}.ds-deriv dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:0}.ds-deriv dt{color:var(--ink-2)}.ds-deriv dd{margin:0;text-align:right;font-weight:550}.ds-deriv .eq{margin-top:8px;padding:6px 8px;background:var(--paper-2);border-radius:2px;font-family:var(--f-mono,ui-monospace,monospace);font-size:var(--t-xs);white-space:pre;overflow-x:auto}"
+    },
+    {
+      "name": "Header Band",
+      "kind": "nav",
+      "refersTo": "band-button",
+      "description": "Sticky petrol shell band: mark, local-only status, band buttons.",
+      "html": "<header class=\"ds-band\"><b>Susceptibility Index</b><span class=\"loc\"><i></i>Runs locally. Nothing is uploaded.</span><span style=\"flex:1\"></span><button class=\"ds-band-btn\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 15v4h16v-4M12 4v11M7.5 10.5 12 15l4.5-4.5\"/></svg>Export</button></header>",
+      "css": ".ds-band{display:flex;align-items:center;gap:20px;height:52px;padding:0 20px;background:var(--band);color:var(--band-ink);font-family: var(--f-sans, system-ui, sans-serif);}.ds-band b{font-size:var(--t-lg);font-weight:650;letter-spacing:-.01em}.ds-band .loc{display:flex;align-items:center;gap:8px;font-size:var(--t-sm);color:var(--band-ink-2)}.ds-band .loc i{width:8px;height:8px;border-radius:50%;background:#6fc39b}.ds-band-btn{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:1px solid #2e6574;border-radius:var(--r);background:var(--band-2);color:var(--band-ink);font:inherit;font-size:var(--t-sm);cursor:pointer}.ds-band-btn:hover{background:#1b5a6a}.ds-band-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Breakpoint Table That Computes Itself",
+    "overview": "The interface reads like a printed clinical breakpoint reference (EUCAST/CLSI-style tables): a dense, ruled sheet of agents grouped under tinted class bands, every figure printed with its count, and a numbered footnote apparatus in a right-hand notes column. It is an operating tool for a desk session, not a dashboard: there are no KPI tiles, no hero, no cards floating on shadows. Structure is carried by hairline rules, tonal steps between ground, rail and sheet, and a single deep petrol-ink header band.\n\nDensity is high and deliberate: 13px table text, 5px by 8px cell padding, tabular figures everywhere. Colour is spent on meaning in three places only: the three-step %S threshold scale, the per-class band tints and edge marks, and the Gram-group dots. Chrome stays blue-grey and quiet so those carriers stay legible.",
+    "keyCharacteristics": [
+      "Cool blue-grey ground with near-white paper sheets; one dark petrol band as the shell.",
+      "Hairline rules (1px) and tonal layering instead of shadows.",
+      "One system sans with tabular figures for every role; monospace only for derivation equations.",
+      "Every computed figure carries a numbered note marker that opens its derivation in the notes column.",
+      "%S always printed as a number inside its threshold cell; colour is never the sole carrier."
+    ],
+    "rules": [
+      {
+        "name": "The Meaning-Only Colour Rule",
+        "body": "Saturated colour appears only where it encodes data: threshold step, antibiotic class, Gram group. Chrome is ink, paper and rule.",
+        "section": "colors"
+      },
+      {
+        "name": "The Number-Always-Printed Rule",
+        "body": "A threshold colour never stands alone: the %S value is printed inside every coloured cell, and the band boundaries are stated in a note.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "`font-variant-numeric: tabular-nums` is set on the body; every numeric column right-aligns.",
+        "section": "typography"
+      },
+      {
+        "name": "The Weight-Not-Size Rule",
+        "body": "The ramp spans 11px to 24px; distinctions inside a sheet are made with weight, case and ink tone.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ruled-Not-Raised Rule",
+        "body": "Persistent surfaces never take a shadow; separate them with a hairline rule or a tonal step. Shadows are reserved for transient overlays.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do print the count beside every percentage and the %S value inside every threshold cell.",
+      "Do attach a numbered note marker to every computed figure and route its derivation to the notes column.",
+      "Do group agents under their class band (`--cb` tint, `--ce` edge) wherever agents are listed, and mirror the same hex values in exported figures.",
+      "Do separate surfaces with 1px rules and the ground/paper-2/paper tonal steps.",
+      "Do keep controls at 30px with the 3px radius, and keep numerics tabular and right-aligned."
+    ],
+    "donts": [
+      "Don't add KPI tiles, shadowed cards or a lone-accent dashboard layout; the system is a ruled reference sheet.",
+      "Don't put a shadow on any persistent surface; only the Export popover and toast are lifted.",
+      "Don't use threshold green, amber or red for chrome, status or decoration; they mean %S bands only.",
+      "Don't let colour be the only carrier of a susceptibility result."
+    ]
+  }
+}

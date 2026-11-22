@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Susceptibility Index</title>
+<meta name="description" content="Single-agent and two-drug combination susceptibility estimates from an isolate line-list. Runs in the browser; data is not uploaded.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1' y='1' width='22' height='22' rx='2' fill='%230d3743'/%3E%3Cpath d='M1 8.5h22M1 15.5h22M8.5 1v22M15.5 1v22' stroke='%23a5c4cc' stroke-width='1'/%3E%3Crect x='9' y='9' width='6' height='6' fill='%236fc39b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="band">
+  <a class="mark" href="./" aria-label="Susceptibility Index, reload">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="2" fill="none" stroke="#a5c4cc" stroke-width="1.4"/><path d="M1 8.5h22M1 15.5h22M8.5 1v22M15.5 1v22" stroke="#a5c4cc" stroke-width="1"/><rect x="9" y="9" width="6" height="6" fill="#6fc39b"/></svg>
+    <b>Susceptibility Index</b><span>v2</span>
+  </a>
+  <div class="local" title="Files are read by this page in your browser. Nothing is sent to a server; closing the tab discards the session."><i></i><span>Runs locally.<span class="long"> Nothing is uploaded.</span></span></div>
+  <div class="spacer"></div>
+  <button class="band-btn" id="btn-settings-load" type="button" title="Load a settings file saved from a previous session">
+    <svg class="i" viewBox="0 0 24 24"><path d="M4 15v4h16v-4M12 4v11M7.5 9.5 12 4l4.5 5.5"/></svg><span class="lbl">Load settings</span>
+  </button>
+  <input type="file" id="file-settings" accept=".json,application/json" hidden>
+  <div class="menu">
+    <button class="band-btn" id="btn-export" type="button" title="Export" aria-haspopup="true" aria-expanded="false" disabled>
+      <svg class="i" viewBox="0 0 24 24"><path d="M4 15v4h16v-4M12 4v11M7.5 10.5 12 15l4.5-4.5"/></svg><span class="lbl">Export</span>
+      <svg class="i" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg>
+    </button>
+    <div class="menu-pop" id="export-menu" role="menu" hidden>
+      <button role="menuitem" data-export="xlsx"><svg class="i" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5zM9 11l6 6M15 11l-6 6"/></svg><b>Results workbook (.xlsx)</b><small>Summary, methods, singles and combinations for All, Gram+, Gram− and the selected genus/species</small></button>
+      <button role="menuitem" data-export="csv"><svg class="i" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5zM8 12h8M8 16h8"/></svg><b>Current table (.csv)</b><small>The table on screen, with current filters and sort</small></button>
+      <button role="menuitem" data-export="svg"><svg class="i" viewBox="0 0 24 24"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg><b>Current figure (.svg)</b><small>Vector, editable in Illustrator or Inkscape</small></button>
+      <button role="menuitem" data-export="png"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 16 5-5 4 4 3-3 6 6"/></svg><b>Current figure (.png, 300 dpi)</b><small>For slides and posters</small></button>
+      <hr>
+      <button role="menuitem" data-export="print"><svg class="i" viewBox="0 0 24 24"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg><b>Print or save as PDF</b><small>Report for the selected subset</small></button>
+      <button role="menuitem" data-export="map"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><b>Organism map (.xlsx)</b><small>Your classifications, reusable next time</small></button>
+      <button role="menuitem" data-export="settings"><svg class="i" viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 12h2M3 12h2M12 3v2M12 19v2"/></svg><b>Settings (.json)</b><small>Column mapping and parameters, to reproduce this analysis</small></button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="rail" id="rail" aria-label="Setup"></aside>
+  <main class="main" id="main"></main>
+</div>
+
+<div id="report" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="data/gram_map_default.js"></script>
+<script src="data/synthetic_demo.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
